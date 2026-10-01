@@ -191,13 +191,21 @@ mod_Metaboenrichment_ui3 <- function(id){
 #' @importFrom ggplot2 ggsave
 #' @importFrom graphics barplot
 #' @importFrom utils data
-mod_Metaboenrichment_server <- function(id){
+mod_Metaboenrichment_server <- function(id, initial_ids = NULL, initial_type = ""){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     ID <- NULL
     geneID <- NULL
     GeneRatio <- NULL
     BgRatio <- NULL
+    observeEvent(TRUE, {
+      if (initial_type %in% c("SMPDB.Metabolite.ID", "KEGG.ID", "HMDB.ID")) {
+        updateSelectInput(session, "type", selected = initial_type)
+      }
+      if (!is.null(initial_ids)) {
+        updateTextAreaInput(session, "genelist", value = initial_ids)
+      }
+    }, once = TRUE)
     observeEvent(input$ex,{
       updateTextAreaInput(session, "genelist",
                           value = paste0(unique(unique(mb_examplelist)),

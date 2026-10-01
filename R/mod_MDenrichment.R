@@ -212,12 +212,17 @@ md_source_example_taxa <- function(source_db) {
 }
 
 
-mod_MDenrichment_server <- function(id){
+mod_MDenrichment_server <- function(id, initial_ids = NULL){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     ID <- NULL
     geneID <- NULL
     GeneRatio <- NULL
+    observeEvent(TRUE, {
+      if (!is.null(initial_ids)) {
+        updateTextAreaInput(session, "genelist", value = initial_ids)
+      }
+    }, once = TRUE)
     BgRatio <- NULL
     observeEvent(input$ex,{
       example_taxa <- md_source_example_taxa(input$source_db)

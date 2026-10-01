@@ -411,7 +411,7 @@ gene_analysis_supports_universe <- function(source_db, analysis_mode = "ORA") {
     !(identical(source_db, "eggNOG") && identical(toupper(analysis_mode), "GSEA"))
 }
 
-mod_GENEenrichment_server <- function(id){
+mod_GENEenrichment_server <- function(id, initial_ids = NULL, initial_type = ""){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     ID <- NULL
@@ -435,6 +435,16 @@ mod_GENEenrichment_server <- function(id){
             )
         )
     })
+    observeEvent(TRUE, {
+        if (initial_type %in% c("KEGG", "COG", "eggNOG")) {
+            updateSelectInput(session, "type", selected = initial_type)
+        }
+        if (!is.null(initial_ids)) {
+            session$onFlushed(function() {
+                updateTextAreaInput(session, "genelist", value = initial_ids)
+            }, once = TRUE)
+        }
+    }, once = TRUE)
     output$analysis_mode_ui <- renderUI({
         if (!identical(input$type, "eggNOG")) {
             return(NULL)
@@ -896,4 +906,3 @@ mod_GENEenrichment_server <- function(id){
 
   })
 }
-
