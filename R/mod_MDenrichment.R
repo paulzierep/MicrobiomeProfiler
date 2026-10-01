@@ -441,7 +441,7 @@ mod_MDenrichment_server <- function(id){
                        height = paste0(input$h, "px"))
           })
 
-          output$downdotPolt <- downloadHandler(
+          output$downdotPolt <- galaxy_download_handler(
             filename = function(){
               paste0("Dotplot_",Sys.Date(),".",input$format)
             },
@@ -465,7 +465,7 @@ mod_MDenrichment_server <- function(id){
             }
           )
 
-          output$downbarPolt <- downloadHandler(
+          output$downbarPolt <- galaxy_download_handler(
             filename = function(){
               paste0("Barplot_",Sys.Date(),".",input$format2)
             },
@@ -499,4 +499,3 @@ mod_MDenrichment_server <- function(id){
 
   })
 }
-
