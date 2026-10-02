@@ -212,7 +212,7 @@ md_source_example_taxa <- function(source_db) {
 }
 
 
-mod_MDenrichment_server <- function(id, initial_ids = NULL){
+mod_MDenrichment_server <- function(id, initial_ids = NULL, downloads = NULL){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     ID <- NULL
@@ -446,7 +446,7 @@ mod_MDenrichment_server <- function(id, initial_ids = NULL){
                        height = paste0(input$h, "px"))
           })
 
-          output$downdotPolt <- galaxy_download_handler(
+          output$downdotPolt <- galaxy_ie_download_with(downloads, ns("downdotPolt"),
             filename = function(){
               paste0("Dotplot_",Sys.Date(),".",input$format)
             },
@@ -470,7 +470,7 @@ mod_MDenrichment_server <- function(id, initial_ids = NULL){
             }
           )
 
-          output$downbarPolt <- galaxy_download_handler(
+          output$downbarPolt <- galaxy_ie_download_with(downloads, ns("downbarPolt"),
             filename = function(){
               paste0("Barplot_",Sys.Date(),".",input$format2)
             },

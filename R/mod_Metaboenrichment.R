@@ -191,7 +191,7 @@ mod_Metaboenrichment_ui3 <- function(id){
 #' @importFrom ggplot2 ggsave
 #' @importFrom graphics barplot
 #' @importFrom utils data
-mod_Metaboenrichment_server <- function(id, initial_ids = NULL, initial_type = ""){
+mod_Metaboenrichment_server <- function(id, initial_ids = NULL, initial_type = "", downloads = NULL){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     ID <- NULL
@@ -451,7 +451,7 @@ mod_Metaboenrichment_server <- function(id, initial_ids = NULL, initial_type = "
                     height = paste0(input$h, "px"))
        })
 
-       output$downdotPolt <- galaxy_download_handler(
+       output$downdotPolt <- galaxy_ie_download_with(downloads, ns("downdotPolt"),
          filename = function(){
            paste0("Dotplot_",Sys.Date(),".",input$format)
          },
@@ -473,7 +473,7 @@ mod_Metaboenrichment_server <- function(id, initial_ids = NULL, initial_type = "
          }
        )
 
-       output$downbarPolt <- galaxy_download_handler(
+       output$downbarPolt <- galaxy_ie_download_with(downloads, ns("downbarPolt"),
          filename = function(){
            paste0("Barplot_",Sys.Date(),".",input$format2)
          },
