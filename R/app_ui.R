@@ -22,11 +22,6 @@ app_ui <- function(request) {
                                            left: calc(50%);}
 
                       ")),
-          # Galaxy interactive tool. Both helpers render nothing unless HISTORY_ID
-          # and API_KEY are in the environment, so the browser build is unchanged.
-          # The picker is placed once for the whole page rather than per module,
-          # because all three tabs read the same imported identifier list.
-          galaxy_ie_picker_ui(),
           galaxy_ie_send_ui(),
 
           tabsetPanel(
