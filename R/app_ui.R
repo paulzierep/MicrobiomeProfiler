@@ -22,7 +22,6 @@ app_ui <- function(request) {
                                            left: calc(50%);}
 
                       ")),
-          galaxy_ie_send_ui(),
 
           tabsetPanel(
             tabPanel("Gene enrichment analysis",
@@ -137,7 +136,8 @@ golem_add_external_resources <- function(){
     bundle_resources(
       path = app_sys('app/www'),
       app_title = 'shiny-MicrobiomeProfiler'
-    )
+    ),
+    galaxy_ie_send_ui()
     # Add here other external resources
     # for example, you can add shinyalert::useShinyalert()
   )
